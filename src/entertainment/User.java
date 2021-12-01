@@ -32,4 +32,24 @@ public class User {
         this.history = new LinkedHashMap<>(userData.getHistory());
         this.givenRatings = new LinkedHashMap<>();
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getSubscriptionType() {
+        return subscriptionType;
+    }
+
+    public LinkedHashMap<String, Integer> getHistory() {
+        return history;
+    }
+
+    public ArrayList<String> getFavoriteMovies() {
+        return favoriteMovies;
+    }
+
+    public LinkedHashMap<String, Double> getGivenRatings() {
+        return givenRatings;
+    }
 }

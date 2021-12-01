@@ -1,7 +1,6 @@
 package database;
 
 import entertainment.Video;
-import java.util.List;
 import java.util.ArrayList;
 import actor.Actor;
 import fileio.Input;
@@ -10,21 +9,21 @@ import entertainment.User;
 import entertainment.Serial;
 
 public class Database {
-    private List<Video> videos;
+    private ArrayList<Video> videos;
 
-    public List<Video> getVideos() {
+    public ArrayList<Video> getVideos() {
         return videos;
     }
 
-    private List<Actor> actors;
+    private ArrayList<Actor> actors;
 
-    public List<Actor> getActors() {
+    public ArrayList<Actor> getActors() {
         return actors;
     }
 
-    private List<User> users;
+    private ArrayList<User> users;
 
-    public List<User> getUsers() {
+    public ArrayList<User> getUsers() {
         return users;
     }
 
@@ -34,15 +33,15 @@ public class Database {
         return input;
     }
 
-    private List<Movie> movies;
+    private ArrayList<Movie> movies;
 
-    public List<Movie> getMovies() {
+    public ArrayList<Movie> getMovies() {
         return movies;
     }
 
-    private List<Serial> serials;
+    private ArrayList<Serial> serials;
 
-    public List<Serial> getSerials() {
+    public ArrayList<Serial> getSerials() {
         return serials;
     }
 
@@ -57,7 +56,7 @@ public class Database {
         users = new ArrayList<>();
         movies = new ArrayList<>();
         serials = new ArrayList<>();
-        this.input = input;
+        Database.input = input;
 
         movies.addAll(input.getMovies().stream().map((data) -> new Movie(data)).toList());
         serials.addAll(input.getSerials().stream().map((data) -> new Serial(data)).toList());
@@ -75,5 +74,50 @@ public class Database {
         }
 
         return database;
+    }
+
+    public User getUserByName(String name) {
+        ArrayList<User> userList = this.getUsers();
+        for (User user : userList)
+            if (user.getUsername().equals(name))
+                return user;
+
+        return null;
+    }
+
+    public Movie getMovieByName(String name) {
+        ArrayList<Movie> movieList = this.getMovies();
+        for (Movie movie : movieList)
+            if (movie.getTitle().equals(name))
+                return movie;
+
+        return null;
+    }
+
+    public Serial getSerialByName(String name) {
+        ArrayList<Serial> serialList = this.getSerials();
+        for (Serial serial : serialList)
+            if (serial.getTitle().equals(name))
+                return serial;
+
+        return null;
+    }
+
+    public Video getVideoByName(String name) {
+        ArrayList<Video> videoList = this.getVideos();
+        for (Video video : videoList)
+            if (video.getTitle().equals(name))
+                return video;
+
+        return null;
+    }
+
+    public Actor getActorByName(String name) {
+        ArrayList<Actor> actorList = this.getActors();
+        for (Actor actor : actorList)
+            if (actor.getName().equals(name))
+                return actor;
+
+        return null;
     }
 }
