@@ -13,7 +13,7 @@ public class Actor {
     public Actor(ActorInputData actorData) {
         this.name = actorData.getName();
         this.careerDescription = actorData.getCareerDescription();
-        this.filmography = actorData.getFilmography();
+        this.filmography = new ArrayList<>(actorData.getFilmography());
         this.awards = new LinkedHashMap<> (actorData.getAwards());
     }
 }

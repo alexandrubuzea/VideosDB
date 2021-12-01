@@ -12,6 +12,6 @@ public class Serial extends Video{
     public Serial(SerialInputData data) {
         super(data.getTitle(), data.getYear(), data.getCast(), data.getGenres());
         this.numberOfSeasons = data.getNumberSeason();
-        this.seasons = data.getSeasons();
+        this.seasons = new ArrayList<>(data.getSeasons());
     }
 }

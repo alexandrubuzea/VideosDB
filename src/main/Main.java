@@ -15,6 +15,7 @@ import java.util.Objects;
 import java.util.List;
 import database.Database;
 import org.json.simple.JSONObject;
+import actions.Action;
 
 import javax.swing.*;
 
@@ -75,14 +76,13 @@ public final class Main {
 
         //TODO add here the entry point to your implementation
 
-        Database database = Database.getDatabase();
+        Database database = Database.getDatabase(input);
 
         List<ActionInputData> actions = input.getCommands();
 
         for (ActionInputData action : actions) {
-            JSONObject obj = new JSONObject();
-            obj.put("id", action.getActionId());
-            obj.put("message: ", ""); // TODO
+            JSONObject obj = fileWriter.writeFile(action.getActionId(), "", Action.performTask(action));
+            arrayResult.add(obj);
         }
 
         fileWriter.closeJSON(arrayResult);
