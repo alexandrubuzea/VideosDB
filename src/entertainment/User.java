@@ -28,7 +28,7 @@ public class User {
     public User(UserInputData userData) {
         this.username = userData.getUsername();
         this.subscriptionType = userData.getSubscriptionType();
-        this.favoriteMovies = userData.getFavoriteMovies();
+        this.favoriteMovies = new ArrayList<>(userData.getFavoriteMovies());
         this.history = new LinkedHashMap<>(userData.getHistory());
         this.givenRatings = new LinkedHashMap<>();
     }

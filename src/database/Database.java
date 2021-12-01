@@ -58,14 +58,14 @@ public class Database {
         serials = new ArrayList<>();
         Database.input = input;
 
-        movies.addAll(input.getMovies().stream().map((data) -> new Movie(data)).toList());
-        serials.addAll(input.getSerials().stream().map((data) -> new Serial(data)).toList());
+        movies.addAll(input.getMovies().stream().map(Movie::new).toList());
+        serials.addAll(input.getSerials().stream().map(Serial::new).toList());
 
-        videos.addAll(input.getMovies().stream().map((data) -> new Movie(data)).toList());
-        videos.addAll(input.getSerials().stream().map((data) -> new Serial(data)).toList());
+        videos.addAll(input.getMovies().stream().map(Movie::new).toList());
+        videos.addAll(input.getSerials().stream().map(Serial::new).toList());
 
-        actors.addAll(input.getActors().stream().map((data) -> new Actor(data)).toList());
-        users.addAll(input.getUsers().stream().map((data) -> new User(data)).toList());
+        actors.addAll(input.getActors().stream().map(Actor::new).toList());
+        users.addAll(input.getUsers().stream().map(User::new).toList());
     }
 
     public static Database getDatabase(Input input) {
@@ -78,10 +78,11 @@ public class Database {
 
     public User getUserByName(String name) {
         ArrayList<User> userList = this.getUsers();
-        for (User user : userList)
-            if (user.getUsername().equals(name))
+        for (User user : userList) {
+            if (user.getUsername().equals(name)) {
                 return user;
-
+            }
+        }
         return null;
     }
 
@@ -119,5 +120,15 @@ public class Database {
                 return actor;
 
         return null;
+    }
+
+    public void clearDatabase() {
+        actors.clear();
+        videos.clear();
+        movies.clear();
+        serials.clear();
+        users.clear();
+        input = null;
+        database = null;
     }
 }

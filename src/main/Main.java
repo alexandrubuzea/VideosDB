@@ -17,8 +17,6 @@ import database.Database;
 import org.json.simple.JSONObject;
 import actions.Action;
 
-import javax.swing.*;
-
 /**
  * The entry point to this homework. It runs the checker that tests your implentation.
  */
@@ -84,6 +82,8 @@ public final class Main {
             JSONObject obj = fileWriter.writeFile(action.getActionId(), "", Action.performTask(action));
             arrayResult.add(obj);
         }
+
+        database.clearDatabase();
 
         fileWriter.closeJSON(arrayResult);
     }
