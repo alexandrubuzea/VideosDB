@@ -3,9 +3,7 @@ package main;
 import checker.Checkstyle;
 import checker.Checker;
 import common.Constants;
-import fileio.Input;
-import fileio.InputLoader;
-import fileio.Writer;
+import fileio.*;
 import org.json.simple.JSONArray;
 
 import java.io.File;
@@ -14,6 +12,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
+import java.util.List;
+import database.Database;
+import org.json.simple.JSONObject;
+
+import javax.swing.*;
 
 /**
  * The entry point to this homework. It runs the checker that tests your implentation.
@@ -71,6 +74,16 @@ public final class Main {
         JSONArray arrayResult = new JSONArray();
 
         //TODO add here the entry point to your implementation
+
+        Database database = Database.getDatabase();
+
+        List<ActionInputData> actions = input.getCommands();
+
+        for (ActionInputData action : actions) {
+            JSONObject obj = new JSONObject();
+            obj.put("id", action.getActionId());
+            obj.put("message: ", ""); // TODO
+        }
 
         fileWriter.closeJSON(arrayResult);
     }
