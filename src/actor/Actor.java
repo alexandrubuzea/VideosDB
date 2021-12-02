@@ -35,4 +35,21 @@ public class Actor {
         this.filmography = new ArrayList<>(actorData.getFilmography());
         this.awards = new LinkedHashMap<> (actorData.getAwards());
     }
+
+    public Actor(Actor actor) {
+        this.name = actor.name;
+        this.careerDescription = actor.careerDescription;
+        this.filmography = new ArrayList<>(actor.filmography);
+        this.awards = new LinkedHashMap<>(actor.awards);
+    }
+
+    public int getNumberOfAwards() {
+        ArrayList<Integer> numberOfAwards = new ArrayList<>(this.getAwards().values());
+
+        int sum = 0;
+        for (Integer number : numberOfAwards)
+            sum += number;
+
+        return sum;
+    }
 }

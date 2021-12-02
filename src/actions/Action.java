@@ -8,9 +8,9 @@ public class Action {
         String actionAnswer;
         switch(action.getActionType()) {
             case Constants.COMMAND -> actionAnswer = Command.performCommand(action);
-            //case Constants.QUERY -> actionAnswer = Query.performQuery(action);
-            //case Constants.RECOMMENDATION -> actionAnswer = Recommendation.performRecommendation(action);
-            default -> actionAnswer = new String("Not yet implemented");
+            case Constants.QUERY -> actionAnswer = Query.performQuery(action);
+            case Constants.RECOMMENDATION -> actionAnswer = Recommendation.performRecommendation(action);
+            default -> actionAnswer = "Not yet implemented";
         }
 
         return actionAnswer;

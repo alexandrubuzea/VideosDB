@@ -123,4 +123,14 @@ public final class Utils {
 
         return mapVideos;
     }
+
+    public static Double getMean(ArrayList<Double> array) {
+        double sum = 0;
+
+        for (Double num : array) {
+            sum += num;
+        }
+
+        return sum / array.size();
+    }
 }

@@ -4,6 +4,7 @@ import fileio.UserInputData;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.AbstractMap.SimpleEntry;
 
 public class User {
     /**
@@ -23,14 +24,17 @@ public class User {
      */
     private final ArrayList<String> favoriteMovies;
 
-    private final LinkedHashMap<String, Double> givenRatings;
+    private final LinkedHashMap<String, Double> givenMovieRatings;
+
+    private final LinkedHashMap<SimpleEntry<String, Integer>, Double> givenSerialRatings;
 
     public User(UserInputData userData) {
         this.username = userData.getUsername();
         this.subscriptionType = userData.getSubscriptionType();
         this.favoriteMovies = new ArrayList<>(userData.getFavoriteMovies());
         this.history = new LinkedHashMap<>(userData.getHistory());
-        this.givenRatings = new LinkedHashMap<>();
+        this.givenSerialRatings = new LinkedHashMap<>();
+        this.givenMovieRatings = new LinkedHashMap<>();
     }
 
     public String getUsername() {
@@ -49,7 +53,24 @@ public class User {
         return favoriteMovies;
     }
 
-    public LinkedHashMap<String, Double> getGivenRatings() {
-        return givenRatings;
+    public LinkedHashMap<String, Double> getGivenMovieRatings() {
+        return givenMovieRatings;
+    }
+
+    public LinkedHashMap<SimpleEntry<String, Integer>, Double> getGivenSerialRatings() {
+        return givenSerialRatings;
+    }
+
+    public User(User user) {
+        this.username = user.username;
+        this.subscriptionType = user.subscriptionType;
+        this.favoriteMovies = new ArrayList<>(user.favoriteMovies);
+        this.history = new LinkedHashMap<>(user.getHistory());
+        this.givenSerialRatings = new LinkedHashMap<>();
+        this.givenMovieRatings = new LinkedHashMap<>();
+    }
+
+    public int getNumberOfRatings() {
+        return this.givenMovieRatings.size() + this.givenSerialRatings.size();
     }
 }
