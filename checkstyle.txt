@@ -1,2 +1,5 @@
 Starting audit...
+[ERROR] /home/alexandru/Desktop/POO/OOP-Homework/./src/actions/Query.java:143:77: '3' is a magic number. [MagicNumber]
+[ERROR] /home/alexandru/Desktop/POO/OOP-Homework/./src/main/Main.java:6:14: Using the '.*' form of import should be avoided - fileio.*. [AvoidStarImport]
 Audit done.
+Checkstyle ends with 2 errors.

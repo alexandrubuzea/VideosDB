@@ -79,7 +79,8 @@ public final class Main {
         List<ActionInputData> actions = input.getCommands();
 
         for (ActionInputData action : actions) {
-            JSONObject obj = fileWriter.writeFile(action.getActionId(), "", Action.performTask(action));
+            JSONObject obj = fileWriter.writeFile(action.getActionId(),
+                    "", Action.performTask(action));
             arrayResult.add(obj);
         }
 

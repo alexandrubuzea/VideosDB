@@ -28,7 +28,7 @@ public class User {
 
     private final LinkedHashMap<SimpleEntry<String, Integer>, Double> givenSerialRatings;
 
-    public User(UserInputData userData) {
+    public User(final UserInputData userData) {
         this.username = userData.getUsername();
         this.subscriptionType = userData.getSubscriptionType();
         this.favoriteMovies = new ArrayList<>(userData.getFavoriteMovies());
@@ -37,31 +37,31 @@ public class User {
         this.givenMovieRatings = new LinkedHashMap<>();
     }
 
-    public String getUsername() {
+    public final String getUsername() {
         return username;
     }
 
-    public String getSubscriptionType() {
+    public final String getSubscriptionType() {
         return subscriptionType;
     }
 
-    public LinkedHashMap<String, Integer> getHistory() {
+    public final LinkedHashMap<String, Integer> getHistory() {
         return history;
     }
 
-    public ArrayList<String> getFavoriteMovies() {
+    public final ArrayList<String> getFavoriteMovies() {
         return favoriteMovies;
     }
 
-    public LinkedHashMap<String, Double> getGivenMovieRatings() {
+    public final LinkedHashMap<String, Double> getGivenMovieRatings() {
         return givenMovieRatings;
     }
 
-    public LinkedHashMap<SimpleEntry<String, Integer>, Double> getGivenSerialRatings() {
+    public final LinkedHashMap<SimpleEntry<String, Integer>, Double> getGivenSerialRatings() {
         return givenSerialRatings;
     }
 
-    public User(User user) {
+    public User(final User user) {
         this.username = user.username;
         this.subscriptionType = user.subscriptionType;
         this.favoriteMovies = new ArrayList<>(user.favoriteMovies);
@@ -70,6 +70,11 @@ public class User {
         this.givenMovieRatings = new LinkedHashMap<>();
     }
 
+    /**
+     * A function that returns the total number of ratings given by an user (which is the sum of
+     * the total number of ratings given).
+     * @return an integer representing the total number of ratings given by the given user.
+     */
     public int getNumberOfRatings() {
         return this.givenMovieRatings.size() + this.givenSerialRatings.size();
     }

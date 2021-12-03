@@ -6,7 +6,10 @@ import entertainment.Genre;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.LinkedHashMap;
+import java.util.Arrays;
 
 /**
  * The class contains static methods that helps with parsing.
@@ -122,16 +125,30 @@ public final class Utils {
         return mapVideos;
     }
 
-    public static Double getMean(ArrayList<Double> array) {
+    /**
+     * A static method used in order to get the mean value of a Double array.
+     * It returns 0.0 is there is no number in the given array.
+     * @param array
+     * @return Double - the mean of the numbers given in the array.
+     */
+    public static Double getMean(final ArrayList<Double> array) {
         double sum = 0;
 
         for (Double num : array) {
             sum += num;
         }
 
+        if (array.size() == 0) {
+            return 0.0;
+        }
+
         return sum / array.size();
     }
 
+    /**
+     * A static method that returns all given genres as an array of strings.
+     * @return an ArrayList<String> with the existing used video genres
+     */
     public static ArrayList<String> getGenresAsStrings() {
         String[] genresArray = {"action",
         "adventure",
