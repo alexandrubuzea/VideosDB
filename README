@@ -1,38 +1,74 @@
-Object Oriented Programming Course
-Homework - VideosDB
+Copyright: Buzea Alexandru-Mihai-Iulian 321CAb
 
-November 2021
+OOP Homework - VideosDB
 
-# Info
-https://ocw.cs.pub.ro/courses/poo-ca-cd/teme/tema
+     The subject of this homework is to create a simple model of a database
+in order to store informations about movies, serials (shows), actors, users
+and the relationships between there entities.
 
-# About the code
+     Using OOP concepts and standards, I created some classes in order to
+describe the existing objects:
 
-We provide the input tests, the logic that parses them and the checker that runs them.
+     -> Actor class
+     I used this class in order to store the information about an actor
+(name, awards, description, filmography etc). I also created some useful methods
+(such as getters for all fields, which are private #encapsulation, and get
+number of awards, a method which is useful for some queries and recommendations).
 
-* test_db - contains the tests in JSON format
-* src
-   * checker - the checker's sources including the checkstyle necessary files, not to be modified
-   * fileio - classes for parsing the input files, not to be modified
-   * common, utils
-        * contain utility classes with constants and static methods
-        * you can add your own functionality in the existing classes or add new classes as well
-   * actor
-        * contains an enum for the types of awards an actor can have - do not modify it
-        * you can add here your actor related classes
-   * entertainment
-        * contains an enum for the supported video genres - do not modify it
-        * class for representing a Season of a tv show - do not modify it
-        * you can add here your entertainment related classes
+     -> User class
+     I used this class in order to store informations about an user (username,
+history, favorite video list etc). I also created some useful methods (getters
+and get number of ratings method) which are helpful when analyzing queries about
+users.
 
-We encourage you to organize your implementation in packages based on the functionality their classes offer. Try to keep
-your code modular, readable and documented.
+     -> Video class
+     I used this class in order to store informations about a video (only the
+common details between a video and a serial; I also created these two classes
+separately) and I also created some common methods (to be overriden) such as
+getDuration() and hasRating() - methods that helps me to find out what is the
+duration of a video (which is calculated in different ways) and if some video
+has at least one rating (which is also calculated in different ways).
 
-# Testing
+     -> Movie class (extends Video)
+     I used this class in order to store some particular information about a
+movie (a single set of ratings, for example) and to override some useful methods
+described above.
 
-The Main class runs the checker on your implementation. Add the entry point to your implementation in it.
+     -> Serial class (extends Video)
+     I used this class in order to store some particular information about a
+movie (for example, multiple sets of ratings - one for each season) and to override
+some methods described above.
 
-Run Main to test your implementation from the IDE or from command line.
+     -> Database class
+     I used this class in order to store all information about all existing
+entities and instances (actors, users, videos). In order to model the database,
+I used the singleton pattern (lazy instantiation, to be more specific - I
+created a private constructor in order to create only one instance of the
+Database class).
 
-Run the main method from Test class with the name of the input file from the command line and the result will be written
-to the out.txt file. Thus, you can compare this result with ref.
+     -> Action, Command, Query and Recommendation classes.
+     These classes contain only static methods and are used in order to perform
+a set of actions, which can be commands (user views a video / user adds a video
+in the favorite list / user gives a rating to a video), queries (there are multiple
+types of queries, for users, videos and actors, which are described in the javadoc
+- most of them use filters for year, keywords or genre, or are using all kinds
+of sorting criteria, such as number of ratings, average rating, popularity and
+so on) and recommendations (these are a special type of queries which are destined
+to recommend one unseen video to a user who wants to get a recommendation).
+
+     Some other OOP aspects I implemented or used:
+     - I used java.util.AbstractMap.SimpleEntry<K, V> in order to store arrays of
+pairs (this is very effective especially because it is inefficient to calculate
+the average rating each time an object is the subject of a comparison), which I
+sorted using lambda expressions.
+     - I used some basic concepts of functional programming in order to shorten
+the code and make it easier to be understood, such as map(), filter() (forEach,
+removeIf etc), stream() and lambda expressions. It really made a huge difference
+in improving code's quality.
+     - I used LinkedHashMap<> in order to store all required key-value pairs for
+maximum efficience (minimum query time - O(1)).
+     - I implemented some static methods in utils package (determining the mean
+value of a double array and getting an arraylist with all genres as Strings).
+     - All in all, I applied some very important concepts, such as polymorphism,
+encapsulation, inheritance and used an important design pattern (which is
+singleton pattern used in order to implement database).
