@@ -1,12 +1,14 @@
 package database;
 
-import entertainment.Video;
+import entertainment.*;
+
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
 import actor.Actor;
 import fileio.Input;
-import entertainment.Movie;
-import entertainment.User;
-import entertainment.Serial;
+import utils.Utils;
 
 public class Database {
     private ArrayList<Video> videos;
@@ -130,5 +132,26 @@ public class Database {
         users.clear();
         input = null;
         database = null;
+    }
+
+    public static LinkedHashMap<Genre, Integer> getGenrePopularity() {
+        LinkedHashMap<Genre, Integer> popularity = new LinkedHashMap<>();
+
+        ArrayList<String> genres = Utils.getGenresAsStrings();
+
+        for (String genre : genres)
+            popularity.put(Utils.stringToGenre(genre), 0);
+
+        ArrayList<Video> myVideos = database.getVideos();
+
+        for (Video video : myVideos) {
+            int videoPopularity = video.getNumberOfViews();
+            for (Genre genre : video.getGenres()) {
+                int value = popularity.get(genre);
+                popularity.replace(genre, value, value + videoPopularity);
+            }
+        }
+
+        return popularity;
     }
 }

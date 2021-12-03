@@ -6,9 +6,7 @@ import entertainment.Genre;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 /**
  * The class contains static methods that helps with parsing.
@@ -132,5 +130,30 @@ public final class Utils {
         }
 
         return sum / array.size();
+    }
+
+    public static ArrayList<String> getGenresAsStrings() {
+        String[] genresArray = {"action",
+        "adventure",
+        "drama",
+        "comedy",
+        "crime",
+        "romance",
+        "war",
+        "history",
+        "thriller",
+        "mystery",
+        "family",
+        "horror",
+        "fantasy",
+        "science fiction",
+        "action & adventure",
+        "sci-fi & fantasy",
+        "animation",
+        "kids",
+        "western",
+        "tv movie"};
+
+        return new ArrayList<>(Arrays.asList(genresArray));
     }
 }

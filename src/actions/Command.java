@@ -61,13 +61,13 @@ public class Command {
             myUser.getHistory().replace(videoName, numberOfSeen, numberOfSeen + 1);
             myVideo.getUserHistory().replace(username, numberOfSeen, numberOfSeen + 1);
 
-            return "success -> " + videoName + " with total views of " + (numberOfSeen + 1);
+            return "success -> " + videoName + " was viewed with total views of " + (numberOfSeen + 1);
         }
 
         myUser.getHistory().put(videoName, 1);
         myVideo.getUserHistory().put(username, 1);
 
-        return "success -> " + videoName + " with total views of 1";
+        return "success -> " + videoName + " was viewed with total views of 1";
     }
 
     public static String ratingCommand(ActionInputData command) {

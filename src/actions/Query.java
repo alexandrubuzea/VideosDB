@@ -45,6 +45,9 @@ public class Query {
         ArrayList<SimpleEntry<Actor, Double>> actorRatings = new ArrayList<>();
         for (Actor actor : myActors) {
             ArrayList<String> filmography = new ArrayList<>(actor.getFilmography());
+            // System.out.println("F = " + filmography);
+            // System.out.println("DB = " + database.getVideos().stream().map(Video::getTitle).toList());
+            filmography.removeIf((videoname) -> database.getVideoByName(videoname) == null);
             filmography.removeIf((videoname) -> !database.getVideoByName(videoname).hasRating());
             ArrayList<Double> ratings = new ArrayList<>(filmography.stream().map((videoname) -> database.getVideoByName(videoname).getAverageRating()).toList());
 
@@ -325,6 +328,18 @@ public class Query {
 
         ArrayList<Video> myVideos = new ArrayList<>(database.getVideos());
 
+        String genre = query.getFilters().get(1).get(0);
+
+        if (genre != null)
+            myVideos.removeIf((video) -> !video.getGenres().contains(Utils.stringToGenre(genre)));
+
+        String yearString = query.getFilters().get(0).get(0);
+
+        if (yearString != null) {
+            Integer year = Integer.parseInt(yearString);
+            myVideos.removeIf((video) -> video.getYear() != year);
+        }
+
         if (query.getSortType().equals("asc")) {
             myVideos.sort((o1, o2) -> {
                 if (o1.getDuration() != o2.getDuration())
@@ -416,23 +431,25 @@ public class Query {
         ArrayList<User> users = database.getUsers();
         ArrayList<User> activeUsers = new ArrayList<>(users);
 
+        activeUsers.removeIf((actor) -> actor.getNumberOfRatings() == 0);
+
         if (query.getSortType().equals("asc")) {
-            activeUsers.sort((o1, o2) -> {
-                if (o2.getNumberOfRatings() != o1.getNumberOfRatings())
-                    return o2.getNumberOfRatings() > o1.getNumberOfRatings() ? 1 : -1;
-                else
-                    return o2.getUsername().compareTo(o1.getUsername());
-            });
-        } else {
             activeUsers.sort((o1, o2) -> {
                 if (o2.getNumberOfRatings() != o1.getNumberOfRatings())
                     return o1.getNumberOfRatings() > o2.getNumberOfRatings() ? 1 : -1;
                 else
                     return o1.getUsername().compareTo(o2.getUsername());
             });
+        } else {
+            activeUsers.sort((o1, o2) -> {
+                if (o2.getNumberOfRatings() != o1.getNumberOfRatings())
+                    return o2.getNumberOfRatings() > o1.getNumberOfRatings() ? 1 : -1;
+                else
+                    return o2.getUsername().compareTo(o1.getUsername());
+            });
         }
 
-        for (int i = query.getNumber(); i < activeUsers.size(); ++i) {
+        for (int i = query.getNumber(); i < activeUsers.size();) {
             activeUsers.remove(query.getNumber());
         }
 

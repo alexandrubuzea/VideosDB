@@ -1,19 +1,19 @@
 package actions;
 
 import database.Database;
+import entertainment.Genre;
 import entertainment.User;
 import entertainment.Video;
 import fileio.ActionInputData;
 import utils.Utils;
 
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.*;
 
 public class Recommendation {
     public static String performRecommendation(ActionInputData recommendation) {
         String recommendationAnswer = null;
 
-        switch(recommendation.getObjectType()) {
+        switch(recommendation.getType()) {
             case "standard" -> recommendationAnswer = Recommendation.standard(recommendation);
             case "best_unseen" -> recommendationAnswer = Recommendation.bestUnseen(recommendation);
             case "popular" -> recommendationAnswer = Recommendation.popular(recommendation);
@@ -49,6 +49,9 @@ public class Recommendation {
 
         myVideos.removeIf((video) -> myUser.getHistory().containsKey(video.getTitle()));
 
+        if (myVideos.isEmpty())
+            return "BestRatedUnseenRecommendation cannot be applied!";
+
         myVideos.sort((o1, o2) -> o1.getAverageRating() > o2.getAverageRating() ? -1 : 1);
 
         return "StandardRecommendation result: " + myVideos.get(0).getTitle();
@@ -62,8 +65,23 @@ public class Recommendation {
         if (myUser.getSubscriptionType().equals("BASIC"))
             return "PopularRecommendation cannot be applied!";
 
-        // TODO
-        return null;
+        LinkedHashMap<Genre, Integer> popularity = Database.getGenrePopularity();
+
+        ArrayList<Video> myVideos = new ArrayList<>(database.getVideos());
+
+        myVideos.removeIf((video) -> myUser.getHistory().containsKey(video.getTitle()));
+
+        if (myVideos.isEmpty())
+            return "PopularRecommendation cannot be applied!";
+
+        ArrayList<Genre> genresArray = new ArrayList<>(popularity.entrySet().stream().sorted((o1, o2) -> o1.getValue() >= o2.getValue() ? -1 : 1).map(Map.Entry::getKey).toList());
+
+        for (Genre genre : genresArray)
+            for (Video video : myVideos)
+                if (video.getGenres().contains(genre))
+                    return "PopularRecommendation result: " + video.getTitle();
+
+        return "PopularRecommendation cannot be applied!";
     }
 
     public static String favorite(ActionInputData recommendation) {
@@ -79,6 +97,9 @@ public class Recommendation {
         myVideos.removeIf((video) -> myUser.getHistory().containsKey(video.getTitle()));
 
         myVideos.sort((o1, o2) -> o1.getUserFavorites().size() > o2.getUserFavorites().size() ? -1 : 1);
+
+        if (myVideos.isEmpty())
+            return "FavoriteRecommendation cannot be applied!";
 
         if (myVideos.get(0).getUserFavorites().size() == 0)
             return "FavoriteRecommendation cannot be applied!";
@@ -117,7 +138,17 @@ public class Recommendation {
                 return 0;
         });
 
+        StringBuilder recommendationResult = new StringBuilder("SearchRecommendation result: [");
 
-        return "SearchRecommendation result: " + myVideos.get(0).getTitle();
+        for (Video video : myVideos) {
+            recommendationResult.append(video.getTitle());
+            recommendationResult.append(", ");
+        }
+
+        recommendationResult.deleteCharAt(recommendationResult.length() - 1);
+        recommendationResult.deleteCharAt(recommendationResult.length() - 1);
+
+        recommendationResult.append("]");
+        return recommendationResult.toString();
     }
 }
